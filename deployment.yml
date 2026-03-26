@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-academic-deployment
+  labels:
+    app: k8s-academic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-academic
+  template:
+    metadata:
+      labels:
+        app: k8s-academic
+    spec:
+      containers:
+      - name: k8s-academic-container
+        image: nightcodex/k8s-academic:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"

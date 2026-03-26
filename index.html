@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K8s Academic | DevOps Simulation</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin: 20px;
+        }
+        h1 {
+            color: var(--accent);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+        .section h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        ul {
+            color: var(--text-muted);
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>k8s-academic</h1>
+        <p class="subtitle">Local Cloud-Native Architecture Simulation <b>v1</b></p>
+
+        <div class="grid">
+            <div class="section">
+                <h2>⚙️ Tech Stack</h2>
+                <ul>
+                    <li><strong>Orchestration:</strong> Kubernetes (Minikube)</li>
+                    <li><strong>CI/CD:</strong> Jenkins</li>
+                    <li><strong>Containerization:</strong> Docker</li>
+                    <li><strong>Networking:</strong> NGINX Ingress & Cloudflare</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>🚀 CI/CD Workflow</h2>
+                <ul>
+                    <li>Push to GitHub (nightcodex7/k8s-academic)</li>
+                    <li>Jenkins Webhook Trigger</li>
+                    <li>Docker Build & Push to Docker Hub</li>
+                    <li>Automated Rolling Update via Kubectl</li>
+                </ul>
+            </div>
+
+            <div class="section" style="grid-column: 1 / -1;">
+                <h2>🌐 Architecture Details</h2>
+                <p style="color: var(--text-muted); line-height: 1.6;">
+                    Traffic routes from the custom domain through a Cloudflare Tunnel into the local network. 
+                    It hits an NGINX Ingress Controller, which passes requests to a Kubernetes Service. 
+                    The backend relies on a Deployment with an attached Horizontal Pod Autoscaler (HPA), 
+                    dynamically adjusting pods from 1 to 6 based on CPU utilization metrics collected by the Metrics Server.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
