@@ -7,32 +7,27 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/nightcodex7/k8s-academic.git'
-            }
-        }
+        
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
+        //             echo "Building Docker Image..."
+        //             sh "docker build -t ${DOCKER_IMAGE}:latest -t ${DOCKER_IMAGE}:${IMAGE_TAG} ."
+        //         }
+        //     }
+        // }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    echo "Building Docker Image..."
-                    sh "docker build -t ${DOCKER_IMAGE}:latest -t ${DOCKER_IMAGE}:${IMAGE_TAG} ."
-                }
-            }
-        }
-
-        stage('Push to Docker Hub') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'ncxDocker', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
-                        sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
-                        sh "docker push ${DOCKER_IMAGE}:latest"
-                        sh "docker push ${DOCKER_IMAGE}:${IMAGE_TAG}"
-                    }
-                }
-            }
-        }
+        // stage('Push to Docker Hub') {
+        //     steps {
+        //         script {
+        //             withCredentials([usernamePassword(credentialsId: 'ncxDocker', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+        //                 sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
+        //                 sh "docker push ${DOCKER_IMAGE}:latest"
+        //                 sh "docker push ${DOCKER_IMAGE}:${IMAGE_TAG}"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Deploy to Minikube') {
             steps {
@@ -47,7 +42,7 @@ pipeline {
                         kubectl apply -f ingress.yml
                         kubectl apply -f hpa.yml
                         kubectl set image deployment/k8s-academic-deployment \
-                        k8s-academic-container=${DOCKER_IMAGE}:${IMAGE_TAG}
+                        k8s-academic-container=${DOCKER_IMAGE}:1
                         kubectl rollout status deployment/k8s-academic-deployment
                         """
                     }
