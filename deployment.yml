@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: k8s-academic-container
-        image: nightcodex/k8s-academic:4
+        image: nightcodex/k8s-academic:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
