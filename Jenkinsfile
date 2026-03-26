@@ -41,7 +41,7 @@ pipeline {
                         kubectl apply -f service.yml
                         kubectl apply -f ingress.yml
                         kubectl apply -f hpa.yml
-                        kubectl set image deployment/k8s-academic-deployment k8s-academic-container=${DOCKER_IMAGE}:1
+                        kubectl set image deployment/k8s-academic-deployment k8s-academic-container=${DOCKER_IMAGE}:4
                         kubectl get pod -w
                         kubectl rollout status deployment/k8s-academic-deployment
                         """
