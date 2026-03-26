@@ -37,14 +37,20 @@ pipeline {
         stage('Deploy to Minikube') {
             steps {
                 script {
-                    sh """
-                    kubectl apply -f deployment.yml
-                    kubectl apply -f service.yml
-                    kubectl apply -f ingress.yml
-                    kubectl apply -f hpa.yml
-                    kubectl set image deployment/k8s-academic-deployment k8s-academic-container=${DOCKER_IMAGE}:${IMAGE_TAG}
-                    kubectl rollout status deployment/k8s-academic-deployment
-                    """
+                    withCredentials([file(credentialsId: 'minikube-kubeconfig', variable: 'KUBECONFIG_FILE')]) {
+                        sh """
+                        export KUBECONFIG=\$KUBECONFIG_FILE
+                        kubectl config current-context
+                        kubectl cluster-info
+                        kubectl apply -f deployment.yml
+                        kubectl apply -f service.yml
+                        kubectl apply -f ingress.yml
+                        kubectl apply -f hpa.yml
+                        kubectl set image deployment/k8s-academic-deployment \
+                        k8s-academic-container=${DOCKER_IMAGE}:${IMAGE_TAG}
+                        kubectl rollout status deployment/k8s-academic-deployment
+                        """
+                    }
                 }
             }
         }
