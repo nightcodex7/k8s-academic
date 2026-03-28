@@ -6,7 +6,7 @@ metadata:
   labels:
     app: k8s-academic
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: k8s-academic
